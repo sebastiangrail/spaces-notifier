@@ -14,8 +14,8 @@ class WorkspaceObserver: NSObject {
     }
     
     func startObserving() {
-        let window = NSWindow()
-        print(window)
+        // We won't receive activeSpaceDidChangeNotification unless we create window
+        let _ = NSWindow()
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
             selector: #selector(spaceChanged(_:)),
@@ -28,9 +28,6 @@ class WorkspaceObserver: NSObject {
             let task = Process()
             task.launchPath = "/bin/sh"
             task.arguments = ["-c", command]
-            
-            let pipe = Pipe()
-            task.standardOutput = pipe
             task.launch()
         }
         
@@ -38,7 +35,7 @@ class WorkspaceObserver: NSObject {
 }
 
 let commands: [String] = [
-    "osascript ~/Config/bin/update-btt-desktop-mode.scpt",
+    
 ]
 let workspaceObserver = WorkspaceObserver(commands: commands)
 workspaceObserver.startObserving()

@@ -18,12 +18,12 @@ class WorkspaceObserver: NSObject {
         let _ = NSWindow()
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
-            selector: #selector(spaceChanged(_:)),
+            selector: #selector(spaceChanged),
             name: NSWorkspace.activeSpaceDidChangeNotification,
             object: nil)
     }
     
-    @objc func spaceChanged(_ x: Any) {
+    @objc func spaceChanged() {
         commands.forEach { command in
             let task = Process()
             task.launchPath = "/bin/sh"
